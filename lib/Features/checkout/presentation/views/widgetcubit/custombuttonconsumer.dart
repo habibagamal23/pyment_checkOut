@@ -35,7 +35,7 @@ class CustomButtonBlocConsumer extends StatelessWidget {
         return CustomButton(
 
             onTap: () {
-              PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: 100, currency: "USD");
+              PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: 100, currency: "USD" , customerId: "cus_RECyKiA9HpFEEQ");
               context.read<StrippymentCubit>().makePayment(paymentIntentInputModel: paymentIntentInputModel);
             },
             text: 'Continue');
