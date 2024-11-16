@@ -14,3 +14,7 @@ final class PaymentFailure extends StrippymentState {
   final String errMessage;
   PaymentFailure(this.errMessage);
 }
+class PaymentMethodSelected extends StrippymentState {
+  final String method; // e.g., "PayPal" or "Stripe"
+  PaymentMethodSelected(this.method);
+}

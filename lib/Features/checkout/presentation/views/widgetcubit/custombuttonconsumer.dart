@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
 import '../../../logic/strippyment_cubit.dart';
+import '../../../model/paypal/pyp.dart';
+import '../../../service/paypal.dart';
 import '../thank_you_view.dart';
 
 class CustomButtonBlocConsumer extends StatelessWidget {
+  final bool isPaypal;
   const CustomButtonBlocConsumer({
     super.key,
+    required this.isPaypal,
   });
 
   @override
@@ -29,18 +33,27 @@ class CustomButtonBlocConsumer extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if( state is  PaymentLoading){
+        if (state is PaymentLoading) {
           return CircularProgressIndicator();
         }
         return CustomButton(
-
             onTap: () {
-              PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: 100, currency: "USD" , customerId: "cus_RECyKiA9HpFEEQ");
-              context.read<StrippymentCubit>().makePayment(paymentIntentInputModel: paymentIntentInputModel);
+              if (isPaypal) {
+                Paypal().exceutePaypalPayment(context, Paypal.transctionsData);
+              } else {
+                PaymentIntentInputModel paymentIntentInputModel =
+                    PaymentIntentInputModel(
+                        amount: 100,
+                        currency: "USD",
+                        customerId: "cus_RECyKiA9HpFEEQ");
+                context.read<StrippymentCubit>().makePayment(
+                    paymentIntentInputModel: paymentIntentInputModel);
+              }
             },
             text: 'Continue');
       },
     );
   }
-
 }
+
+class OrderItemModel {}
